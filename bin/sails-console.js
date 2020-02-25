@@ -142,7 +142,9 @@ function history(repl, file) {
 
   repl.rli.addListener('line', function(code) {
     if (code && code !== '.history') {
-      fs.write(fd, code + '\n');
+      fs.write(fd, code + '\n', function(err, result) {
+        if(err) console.log('error', err);
+      });
     } else {
       repl.rli.historyIndex++;
       repl.rli.history.pop();
